@@ -85,6 +85,19 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
         WebRTCSrv.setRemotePeer(remotePeer);
     };
 
+    var hangUp = function() {
+        // send socket message
+        SocketSrv.sendMessage({
+            to: remotePeer.id,
+            topic: 'call.hangup',
+            payload: {
+
+            }
+        });
+
+        WebRTCSrv.closeConnection();
+    };
+
     // ----------- App initialization ------------
     SocketSrv.connect();
 
@@ -126,6 +139,7 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     $scope.withdrawCall = withdrawCall;
     $scope.rejectCall = rejectCall;
     $scope.acceptCall = acceptCall;
+    $scope.hangUp = hangUp;
     $scope.isConnected = WebRTCSrv.isConnected;
 
     FocusSrv('username');
@@ -169,6 +183,10 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
         });
     });
 
+    $scope.$on('call.hangup', function(event, data) {
+        WebRTCSrv.closeConnection();
+    });
+
     $scope.$on('webrtc.connected', function(event, data) {
         $scope.$apply(function() {
             // set ui message
@@ -177,6 +195,9 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     });
 
     $scope.$on('webrtc.disconnected', function(event, data) {
-
+       $scope.$apply(function() {
+           // set ui message
+           uiMessage = null;
+       });
     });
 });

@@ -215,6 +215,10 @@ input[type=text], input[type=password], input[type=email] {
       display: inline-block;
       width: 50%;
       vertical-align: top;
+
+      .divider {
+        margin: 0 2em;
+      }
     }
   }
 }

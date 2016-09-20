@@ -62,7 +62,23 @@
                     </div>
 
                     <div class="right-container">
-                        RIGHT
+                        <section class="section-element">
+                            talking to <span class="highlight">{{getRemotePeer().username}}</span>
+                        </section>
+
+                        <section class="section-element">
+                            <div class="ui-button ui-button-lower" role="button" ng-click="hangUp()">Hang up</div>
+                        </section>
+
+                        <section class="divider"></section>
+
+                        <section class="section-element chat">
+                            <div class="section-element section-title">Chat</div>
+
+                            <div class="section-element">
+                                Messages...
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>

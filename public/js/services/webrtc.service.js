@@ -131,6 +131,8 @@ angular.module('plain-webrtc')
                 case 'closed':
                     LogSrv.info('--- closed ---');
 
+                    $rootScope.$broadcast('webrtc.disconnected');
+
                     break;
 
                 case 'disconnected':
@@ -138,8 +140,7 @@ angular.module('plain-webrtc')
 
                     $rootScope.$broadcast('webrtc.disconnected');
 
-                    // release media access (returns a promise)
-                    releaseMediaAccess();
+                    closeWebRTCConnection();
 
                     break;
 
@@ -214,6 +215,30 @@ angular.module('plain-webrtc')
                 });
         };
 
+        var hangup = function() {
+            if (peerConnection !== null) {
+                peerConnection.close();
+            }
+
+            peerConnection = null;
+
+            localStream = null;
+            remoteStream = null;
+        };
+
+        var closeWebRTCConnection = function() {
+            if (peerConnection !== null) {
+                LogSrv.info('--- closing WebRTC connection ---');
+
+                releaseMediaAccess()
+                    .then(function() {
+                        hangup();
+
+                        setRemotePeer(null);
+                    });
+            }
+        };
+
         var setRemotePeer = function(peer) {
             remotePeer = peer;
         };
@@ -280,6 +305,7 @@ angular.module('plain-webrtc')
         return {
             init: init,
             establishConnection: establishConnection,
+            closeConnection: closeWebRTCConnection,
             setRemotePeer: setRemotePeer,
             isConnected: isConnected
         };
