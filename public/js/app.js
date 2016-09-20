@@ -9,7 +9,7 @@ app.constant("AppConfig", {
     "log.error": true
 });
 
-app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
+app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSrv) {
     // ----------- App config ------------
     var user = {
         username: null
@@ -80,6 +80,9 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
 
         // set UI message
         uiMessage = 'call.accepted';
+
+        // set remote peer in WebRTC service
+        WebRTCSrv.setRemotePeer(remotePeer);
     };
 
     // ----------- App initialization ------------
@@ -95,7 +98,6 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
     $scope.login = function(isValid) {
         if (isValid) {
             user.username = $scope.userObj.username;
-            LogSrv.info(user);
 
             // register username with socket service
             SocketSrv.register(user.username);
@@ -156,5 +158,21 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
     $scope.$on('call.accepted', function(event, data) {
         // set ui message
         uiMessage = 'call.accepted';
+
+        // set remote peer in WebRTC service
+        WebRTCSrv.setRemotePeer(remotePeer);
+
+        // establish WebRTC connection
+        WebRTCSrv.establishConnection({
+            initiator: true
+        });
+    });
+
+    $scope.$on('webrtc.connected', function(event, data) {
+        
+    });
+
+    $scope.$on('webrtc.disconnected', function(event, data) {
+
     });
 });
