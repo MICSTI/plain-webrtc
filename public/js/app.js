@@ -1,5 +1,6 @@
 var app = angular.module("plain-webrtc", [
-    'ui.router'
+    'ui.router',
+    'ngMessages'
 ]);
 
 // define application constants

@@ -3,6 +3,8 @@ $title: #81cfe0;
 $text_primary: #444;
 $link_color: cornflowerblue;
 
+$thunderbird: #d91e18;
+
 $grass: #3ac569;
 $snow: #ffffff;
 $alge: #79a8a9;
@@ -38,6 +40,14 @@ input[type=text], input[type=password], input[type=email] {
 
 .bold {
   font-weight: bold;
+}
+
+.error {
+  color: $thunderbird;
+}
+
+.text-small {
+  font-size: 0.85em;
 }
 
 /* ------------- Content ------------ */
