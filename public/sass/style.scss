@@ -198,6 +198,25 @@ input[type=text], input[type=password], input[type=email] {
       }
     }
   }
+
+  .session-container {
+    .left-container {
+      display: inline-block;
+      width: 50%;
+      vertical-align: top;
+
+      .video {
+        width: 100% !important;
+        height: auto !important;
+      }
+    }
+
+    .right-container {
+      display: inline-block;
+      width: 50%;
+      vertical-align: top;
+    }
+  }
 }
 
 .status-free {

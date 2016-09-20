@@ -41,9 +41,9 @@
         </section>
 
         <section class="section-element section-dashboard" ng-if="isLoggedIn()">
-            <div class="section-element section-title divider">Hi <span class="highlight">{{user().username}}</span></div>
+            <div class="section-element section-title divider"><span class="highlight">{{user().username}}</span></div>
 
-            <div class="section-element">
+            <div class="section-element" ng-if="!isConnected()">
                 <ul class="list">
                     <li class="list-title">Available peers</li>
 
@@ -53,6 +53,18 @@
                         <span class="grey">No peers available</span>
                     </li>
                 </ul>
+            </div>
+
+            <div class="section-element" ng-if="isConnected()">
+                <div class="session-container">
+                    <div class="left-container">
+                        <real-time-video></real-time-video>
+                    </div>
+
+                    <div class="right-container">
+                        RIGHT
+                    </div>
+                </div>
             </div>
         </section>
 

@@ -122,7 +122,9 @@ angular.module('plain-webrtc')
                 case 'connected':
                     LogSrv.info('--- connected ---');
 
-                    $rootScope.$broadcast('webrtc.connected');
+                    $rootScope.$broadcast('webrtc.connected', {
+                        stream: remoteStream
+                    });
 
                     break;
 
@@ -216,6 +218,10 @@ angular.module('plain-webrtc')
             remotePeer = peer;
         };
 
+        var isConnected = function() {
+            return peerConnection !== null;
+        };
+
         $rootScope.$on('webrtc.init', function(event, data) {
             LogSrv.info('--- received WebRTC init ---');
 
@@ -274,6 +280,7 @@ angular.module('plain-webrtc')
         return {
             init: init,
             establishConnection: establishConnection,
-            setRemotePeer: setRemotePeer
+            setRemotePeer: setRemotePeer,
+            isConnected: isConnected
         };
     });

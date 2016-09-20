@@ -126,6 +126,7 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     $scope.withdrawCall = withdrawCall;
     $scope.rejectCall = rejectCall;
     $scope.acceptCall = acceptCall;
+    $scope.isConnected = WebRTCSrv.isConnected;
 
     FocusSrv('username');
 
@@ -169,7 +170,10 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     });
 
     $scope.$on('webrtc.connected', function(event, data) {
-        
+        $scope.$apply(function() {
+            // set ui message
+            uiMessage = null;
+        });
     });
 
     $scope.$on('webrtc.disconnected', function(event, data) {
