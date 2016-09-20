@@ -41,7 +41,13 @@
         </section>
 
         <section class="section-element section-dashboard" ng-if="isLoggedIn()">
-            <div class="section-title">Hi {{user().username}}</div>
+            <div class="section-element section-title divider">Hi <span class="highlight">{{user().username}}</span></div>
+
+            <div class="section-element">
+                <ul class="list">
+                    <li class="list-title">Available peers</li>
+                </ul>
+            </div>
         </section>
     </section>
 

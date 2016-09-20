@@ -4,6 +4,7 @@ $text_primary: #444;
 $link_color: cornflowerblue;
 
 $thunderbird: #d91e18;
+$steel_blue: #4b77be;
 
 $grass: #3ac569;
 $snow: #ffffff;
@@ -46,8 +47,24 @@ input[type=text], input[type=password], input[type=email] {
   color: $thunderbird;
 }
 
+.highlight {
+  color: $title;
+}
+
 .text-small {
   font-size: 0.85em;
+}
+
+.list {
+  .list-title {
+    background-color: $steel_blue;
+    color: $snow;
+    padding: 0.5em;
+  }
+}
+
+.divider {
+  border-bottom: 4px solid $alge;
 }
 
 /* ------------- Content ------------ */
@@ -153,3 +170,12 @@ input[type=text], input[type=password], input[type=email] {
   background: $alge;
 }
 /* ---------------------------------- */
+
+.section-dashboard {
+  width: 75%;
+  margin-left: 12.5%;
+
+  .list {
+
+  }
+}
