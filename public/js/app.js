@@ -107,6 +107,10 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     };
 
     $scope.userObj = {};
+    $scope.chat = {
+        message: "",
+        history: []
+    };
 
     $scope.login = function(isValid) {
         if (isValid) {
@@ -141,6 +145,25 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
     $scope.acceptCall = acceptCall;
     $scope.hangUp = hangUp;
     $scope.isConnected = WebRTCSrv.isConnected;
+    $scope.sendChatMessage = function() {
+        var messageObj = {
+            author: user.username,
+            text: $scope.chat.message
+        }
+
+        var message = {
+            topic: 'chat.message',
+            payload: messageObj
+        };
+
+        WebRTCSrv.sendDataChannelMessage(JSON.stringify(message));
+
+        $scope.chat.history.unshift(messageObj);
+
+        $scope.chat.message = "";
+
+        FocusSrv('chatMessage');
+    };
 
     FocusSrv('username');
 
@@ -201,5 +224,11 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
            // set ui message
            uiMessage = null;
        });
+    });
+
+    $scope.$on('chat.message', function(event, message) {
+        $scope.$apply(function() {
+            $scope.chat.history.unshift(message);
+        });
     });
 });

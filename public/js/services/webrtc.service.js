@@ -182,6 +182,8 @@ angular.module('plain-webrtc')
             }
 
             LogSrv.info('--- data channel message ---', message);
+
+            $rootScope.$broadcast(message.topic, message.payload);
         };
 
         var requestMediaAccess = function(options) {
@@ -274,6 +276,12 @@ angular.module('plain-webrtc')
             return peerConnection !== null;
         };
 
+        var sendDataChannelMessage = function(message) {
+            if (dataChannel !== null && dataChannel.readyState === 'open') {
+                dataChannel.send(message);
+            }
+        };
+
         $rootScope.$on('webrtc.init', function(event, data) {
             LogSrv.info('--- received WebRTC init ---');
 
@@ -351,6 +359,7 @@ angular.module('plain-webrtc')
             establishConnection: establishConnection,
             closeConnection: closeWebRTCConnection,
             setRemotePeer: setRemotePeer,
-            isConnected: isConnected
+            isConnected: isConnected,
+            sendDataChannelMessage: sendDataChannelMessage
         };
     });

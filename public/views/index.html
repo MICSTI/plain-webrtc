@@ -76,13 +76,17 @@
                             <div class="section-element section-title">Chat</div>
 
                             <div class="section-element chat-input">
-                                <input type="text" id="chatMessage" />
+                                <input type="text" id="chatMessage" ng-model="chat.message" />
                                 <div class="ui-button ui-button-higher" role="button" ng-click="sendChatMessage()" placeholder="Type message...">Send</div>
                             </div>
 
                             <div class="section-element">
+                                <div class="bold">Messages</div>
                                 <ul>
-
+                                    <li ng-repeat="message in chat.history" class="chat-message">
+                                        <div class="text-small bold">{{message.author}}:</div>
+                                        <div class="chat-message-text">{{message.text}}</div>
+                                    </li>
                                 </ul>
                             </div>
                         </section>

@@ -225,6 +225,19 @@ input[type=text], input[type=password], input[type=email] {
         align-items: center;
         justify-content: center;
       }
+
+      .chat-message {
+        padding: 0.5em 0.2em;
+        border-bottom: 1px solid $alge;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .chat-message-text {
+        margin-top: 0.2em;
+      }
     }
   }
 }
