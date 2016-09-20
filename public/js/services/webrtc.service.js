@@ -6,6 +6,9 @@ angular.module('plain-webrtc')
         var remoteStream = null;
         var peerConnection = null;
 
+        var dataChannel = null;
+        var dataChannelName = 'plain-webrtc-channel';
+
         var remotePeer = null;
 
         // Service configuration
@@ -61,6 +64,15 @@ angular.module('plain-webrtc')
 
             peerConnection.ondatachannel = function(event) {
                 LogSrv.info('--- data channel received ---', event.channel);
+
+                dataChannel = event.channel;
+
+                dataChannel.onopen = handleDataChannelStateChange;
+                dataChannel.onmessage = handleDataChannelMessage;
+                dataChannel.onclose = handleDataChannelStateChange;
+                dataChannel.onerror = function(err) {
+                    LogSrv.error('data channel error', err);
+                }
             }
         };
 
@@ -155,6 +167,21 @@ angular.module('plain-webrtc')
                 default:
                     LogSrv.info('--- ICE connection state change ---', state);
             }
+        };
+
+        var handleDataChannelStateChange = function() {
+            LogSrv.info('--- data channel state: ' + dataChannel.readyState + ' ---');
+        };
+
+        var handleDataChannelMessage = function(event) {
+            var message = null;
+            try {
+                message = JSON.parse(event.data);
+            } catch (ex) {
+                message = null;
+            }
+
+            LogSrv.info('--- data channel message ---', message);
         };
 
         var requestMediaAccess = function(options) {
@@ -254,6 +281,23 @@ angular.module('plain-webrtc')
                 .then(function() {
                     // init peer connection
                     init();
+
+                    // open data channel
+                    try {
+                        dataChannel = peerConnection.createDataChannel(dataChannelName, { reliable: true });
+
+                        LogSrv.info('--- data channel created ---');
+
+                        dataChannel.onopen = handleDataChannelStateChange;
+                        dataChannel.onmessage = handleDataChannelMessage;
+                        dataChannel.onclose = handleDataChannelStateChange;
+                        dataChannel.onerror = function(err) {
+                            LogSrv.error('data channel error', err);
+                        }
+                    } catch (ex) {
+                        LogSrv.error('failed to create data channel', ex);
+                        dataChannel = null;
+                    }
 
                     // send session description offer
                     offer();
