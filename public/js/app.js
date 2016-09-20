@@ -192,6 +192,8 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
             // set ui message
             uiMessage = null;
         });
+
+        FocusSrv('chatMessage');
     });
 
     $scope.$on('webrtc.disconnected', function(event, data) {

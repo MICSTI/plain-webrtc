@@ -219,6 +219,12 @@ input[type=text], input[type=password], input[type=email] {
       .divider {
         margin: 0 2em;
       }
+
+      .chat-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }
