@@ -3,7 +3,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 // config
-var port = process.env.PORT || 9000;
+var serverConfig = require("./config/server");
+
+var port = process.env.PORT || serverConfig.port;
 
 // app instance
 var app = express();
