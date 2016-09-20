@@ -8,10 +8,11 @@ app.constant("AppConfig", {
     "log.error": true
 });
 
-app.controller("AppCtrl", function($scope) {
+app.controller("AppCtrl", function($scope, LogSrv, SocketSrv) {
     // ----------- App config ------------
 
     // ----------- App initialization ------------
+    SocketSrv.connect();
 
     // ----------- Event handling ------------
 

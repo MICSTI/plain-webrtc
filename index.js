@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var path = require('path');
+var http = require('http');
 
 // config
 var serverConfig = require("./config/server");
@@ -57,8 +58,15 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// server instance
+var server = http.Server(app);
+
+// configure Socket.io
+var io = require('socket.io')(server);
+require('./server/communication')(io);
+
 // start app
-app.listen(port);
+server.listen(port);
 
 console.log('Plain WebRTC started on port', port);
 
