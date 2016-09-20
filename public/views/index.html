@@ -21,6 +21,7 @@
     <h1>Plain WebRTC</h1>
 
     <section class="content">
+        <!--  Login section -->
         <section class="section-element section-login" ng-if="!isLoggedIn()">
             <form name="loginForm" ng-submit="login(loginForm.$valid)">
                 <div class="form-group">
@@ -37,6 +38,10 @@
                     <input type="submit" value="Login" ng-hide="true" />
                 </div>
             </form>
+        </section>
+
+        <section class="section-element section-dashboard" ng-if="isLoggedIn()">
+            <div class="section-title">Hi {{user().username}}</div>
         </section>
     </section>
 

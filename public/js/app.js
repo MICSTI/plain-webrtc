@@ -29,9 +29,16 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
         if (isValid) {
             user.username = $scope.userObj.username;
             LogSrv.info(user);
+
+            // register username with socket service
+            SocketSrv.register(user.username);
         } else {
             LogSrv.error('Form not valid');
         }
+    };
+
+    $scope.user = function() {
+        return user;
     };
 
     FocusSrv('username');

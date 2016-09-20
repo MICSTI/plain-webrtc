@@ -11,7 +11,14 @@ angular.module('plain-webrtc')
             LogSrv.info('Socket connected');
         };
 
+        var register = function(username) {
+            socket.emit('register', {
+                username: username
+            });
+        };
+
         return {
-            connect: connect
+            connect: connect,
+            register: register
         };
     });
