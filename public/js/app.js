@@ -165,6 +165,12 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv, WebRTCSr
         FocusSrv('chatMessage');
     };
 
+    $scope.onKeyPress = function(keyEvent) {
+        if (keyEvent.which === 13) {
+            $scope.sendChatMessage();
+        }
+    };
+
     FocusSrv('username');
 
 

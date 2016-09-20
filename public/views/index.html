@@ -76,7 +76,7 @@
                             <div class="section-element section-title">Chat</div>
 
                             <div class="section-element chat-input">
-                                <input type="text" id="chatMessage" ng-model="chat.message" />
+                                <input type="text" id="chatMessage" ng-keypress="onKeyPress($event)" ng-model="chat.message" />
                                 <div class="ui-button ui-button-higher" role="button" ng-click="sendChatMessage()" placeholder="Type message...">Send</div>
                             </div>
 
