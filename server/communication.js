@@ -48,6 +48,19 @@ module.exports = function(io) {
             broadcastUserUpdate(client);
         });
 
+        client.on('msg', function(data) {
+            var recipient = io.sockets.connected[data.to];
+
+            if (!recipient) {
+                console.error('Recipient not found', data.to);
+            }
+
+            delete data.to;
+            data.from = client.id;
+
+            recipient.emit('msg', data);
+        });
+
         client.on('disconnect', function() {
             console.log('-- ' + client.id + ' left --');
 

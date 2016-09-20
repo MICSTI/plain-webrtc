@@ -41,6 +41,15 @@ angular.module('plain-webrtc')
             on('users.update', function(data) {
                 parseUserArray(data);
             });
+
+            on('msg', function(data) {
+                var topic = data.topic;
+
+                delete data.topic;
+
+                // publish relay message on root scope
+                $rootScope.$broadcast(topic, data);
+            });
         };
 
         var parseUserArray = function(_users) {
@@ -55,9 +64,27 @@ angular.module('plain-webrtc')
             });
         };
 
+        var sendMessage = function(message) {
+            socket.emit('msg', message);
+        };
+
+        var findUserById = function(id) {
+            var user = null;
+
+            users.forEach(function(u) {
+                if (u.id === id) {
+                    user = u;
+                }
+            });
+
+            return user;
+        };
+
         return {
             connect: connect,
             register: register,
+            findUserById: findUserById,
+            sendMessage: sendMessage,
             getUsers: function() {
                 return users;
             }

@@ -192,6 +192,10 @@ input[type=text], input[type=password], input[type=email] {
   .list {
     li {
       padding: 0.75em;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
@@ -201,5 +205,13 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .status-talking {
+  background-color: $alice_blue;
+}
+
+.section-info {
+  width: 75%;
+  margin-left: 12.5%;
+
+  padding: 1em 0 0.1em 0;
   background-color: $alice_blue;
 }

@@ -47,12 +47,33 @@
                 <ul class="list">
                     <li class="list-title">Available peers</li>
 
-                    <li ng-if="peers().length > 0" ng-repeat="peer in peers()" ng-class="{ 'disabled': peer.status !== 'free' }" class="status-{{peer.status}}">{{peer.username}}</li>
+                    <li ng-if="peers().length > 0" ng-repeat="peer in peers()" ng-class="{ 'disabled': peer.status !== 'free' || getInfoMessage() }" class="status-{{peer.status}}" ng-click="callUser(peer)">{{peer.username}}</li>
 
                     <li ng-if="peers().length <= 0">
                         <span class="grey">No peers available</span>
                     </li>
                 </ul>
+            </div>
+        </section>
+
+        <section class="section-element section-info" ng-if="getInfoMessage()">
+            <div class="section-element" ng-if="getInfoMessage() === 'call.outgoing'">
+                <div>Calling <span class="highlight">{{getRemotePeer().username}}</span>...</div>
+                <div class="uiActions">
+                    <div class="ui-button ui-button-lower" role="button" ng-click="withdrawCall()">Withdraw</div>
+                </div>
+            </div>
+
+            <div class="section-element" ng-if="getInfoMessage() === 'call.incoming'">
+                <div>Incoming call from <span class="highlight">{{getRemotePeer().username}}</span></div>
+                <div class="uiActions">
+                    <div class="ui-button ui-button-lower" role="button" ng-click="rejectCall()">Reject</div>
+                    <div class="ui-button ui-button-primary" role="button" ng-click="acceptCall()">Accept</div>
+                </div>
+            </div>
+
+            <div class="section-element" ng-if="getInfoMessage() === 'call.accepted'">
+                <div>Establishing WebRTC connection...</div>
             </div>
         </section>
     </section>

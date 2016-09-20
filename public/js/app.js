@@ -15,6 +15,73 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
         username: null
     };
 
+    var remotePeer = null;
+    var uiMessage = null;
+
+    var callUser = function(_remotePeer) {
+        remotePeer = _remotePeer;
+
+        // send call message to remote peer
+        SocketSrv.sendMessage({
+            to: remotePeer.id,
+            topic: 'call.offer',
+            payload: {
+
+            }
+        });
+
+        // set UI message
+        uiMessage = 'call.outgoing';
+    };
+
+    var withdrawCall = function() {
+        // send socket message
+        SocketSrv.sendMessage({
+            to: remotePeer.id,
+            topic: 'call.withdrawn',
+            payload: {
+
+            }
+        });
+
+        // reset remote peer
+        remotePeer = null;
+
+        // set UI message
+        uiMessage = null;
+    };
+
+    var rejectCall = function() {
+        // send socket message
+        SocketSrv.sendMessage({
+            to: remotePeer.id,
+            topic: 'call.rejected',
+            payload: {
+
+            }
+        });
+
+        // reset remote peer
+        remotePeer = null;
+
+        // set UI message
+        uiMessage = null;
+    };
+
+    var acceptCall = function() {
+        // send socket message
+        SocketSrv.sendMessage({
+            to: remotePeer.id,
+            topic: 'call.accepted',
+            payload: {
+
+            }
+        });
+
+        // set UI message
+        uiMessage = 'call.accepted';
+    };
+
     // ----------- App initialization ------------
     SocketSrv.connect();
 
@@ -43,10 +110,51 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
 
     $scope.peers = function() {
         return SocketSrv.getUsers();
-    }
+    };
+
+    $scope.getInfoMessage = function() {
+        return uiMessage;
+    };
+
+    $scope.getRemotePeer = function() {
+        return remotePeer;
+    };
+
+    $scope.callUser = callUser;
+    $scope.withdrawCall = withdrawCall;
+    $scope.rejectCall = rejectCall;
+    $scope.acceptCall = acceptCall;
 
     FocusSrv('username');
 
-    // ----------- Event handling ------------
 
+    // ----------- Event handling ------------
+    $scope.$on('call.offer', function(event, data) {
+        // look up user
+        remotePeer = SocketSrv.findUserById(data.from);
+
+        // set ui message
+        uiMessage = 'call.incoming';
+    });
+
+    $scope.$on('call.withdrawn', function(event, data) {
+        // reset remote peer
+        remotePeer = null;
+
+        // set ui message
+        uiMessage = null;
+    });
+
+    $scope.$on('call.rejected', function(event, data) {
+        // reset remote peer
+        remotePeer = null;
+
+        // set ui message
+        uiMessage = null;
+    });
+
+    $scope.$on('call.accepted', function(event, data) {
+        // set ui message
+        uiMessage = 'call.accepted';
+    });
 });
