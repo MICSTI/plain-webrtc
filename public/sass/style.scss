@@ -1,0 +1,35 @@
+$primary: #c5eff7;
+$title: #81cfe0;
+$text_primary: #444;
+$link_color: cornflowerblue;
+
+body {
+  background-color: $primary;
+  font-family: 'Open Sans', Verdana, sans-serif;
+  color: $text_primary;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a, a:link, a:focus, a:visited, a:active {
+  color: $link_color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input[type=text], input[type=password], input[type=email] {
+  font-family: 'Open Sans', Verdana, sans-serif;
+}
+
+.bold {
+  font-weight: bold;
+}

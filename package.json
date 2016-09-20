@@ -26,6 +26,9 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "lodash": "^4.16.0",
+    "method-override": "^2.3.6",
+    "nodemon": "^1.10.2",
+    "path": "^0.12.7",
     "socket.io": "^1.4.8"
   },
   "devDependencies": {
