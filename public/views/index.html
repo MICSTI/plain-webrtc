@@ -46,6 +46,12 @@
             <div class="section-element">
                 <ul class="list">
                     <li class="list-title">Available peers</li>
+
+                    <li ng-if="peers().length > 0" ng-repeat="peer in peers()" ng-class="{ 'disabled': peer.status !== 'free' }" class="status-{{peer.status}}">{{peer.username}}</li>
+
+                    <li ng-if="peers().length <= 0">
+                        <span class="grey">No peers available</span>
+                    </li>
                 </ul>
             </div>
         </section>

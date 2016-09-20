@@ -16,26 +16,51 @@ module.exports = function(io) {
         }
     };
 
+    var getAllClients = function() {
+        return clients
+            .filter(function(c) {
+                return c.username !== undefined;
+            })
+            .map(function(c) {
+                return {
+                    id: c.id,
+                    username: c.username,
+                    status: c.status
+                }
+            });
+    };
+
+    var broadcastUserUpdate = function(client) {
+        // broadcast to everyone except ourselves
+        io.sockets.emit('users.update', getAllClients());
+    };
+
     io.on('connection', function(client) {
         // add client to clients array
         clients.push(client);
 
-        console.log('-- ' + client.id + ' joined --');
-
         client.on('register', function(data) {
             setClientInfo(client.id, 'username', data.username);
+            setClientInfo(client.id, 'status', 'free');
 
             console.log('--- ' + client.id + ' registered as ' + client.username + ' ---');
+
+            broadcastUserUpdate(client);
         });
 
-        function leave() {
+        client.on('disconnect', function() {
             console.log('-- ' + client.id + ' left --');
 
             _.remove(clients, function(obj) {
-                return obj.id === client.id
+                return obj.id === client.id;
             });
-        };
 
-        client.on('disconnect', leave);
+            broadcastUserUpdate(client);
+        });
+
+        // send socket id back to client
+        client.emit('id', client.id);
+
+        console.log('-- ' + client.id + ' joined --');
     });
 };

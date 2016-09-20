@@ -5,6 +5,11 @@ $link_color: cornflowerblue;
 
 $thunderbird: #d91e18;
 $steel_blue: #4b77be;
+$hoki: #67809f;
+$curious_blue: #3498db;
+$alice_blue: #e4f1fe;
+$jordy_blue: #89c4f4;
+$edward: #abb7b7;
 
 $grass: #3ac569;
 $snow: #ffffff;
@@ -65,6 +70,15 @@ input[type=text], input[type=password], input[type=email] {
 
 .divider {
   border-bottom: 4px solid $alge;
+}
+
+.grey {
+  color: $edward;
+}
+
+.disabled, .inactive {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 /* ------------- Content ------------ */
@@ -176,6 +190,16 @@ input[type=text], input[type=password], input[type=email] {
   margin-left: 12.5%;
 
   .list {
-
+    li {
+      padding: 0.75em;
+    }
   }
+}
+
+.status-free {
+  background-color: $jordy_blue;
+}
+
+.status-talking {
+  background-color: $alice_blue;
 }

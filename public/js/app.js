@@ -41,6 +41,10 @@ app.controller("AppCtrl", function($scope, LogSrv, SocketSrv, FocusSrv) {
         return user;
     };
 
+    $scope.peers = function() {
+        return SocketSrv.getUsers();
+    }
+
     FocusSrv('username');
 
     // ----------- Event handling ------------
